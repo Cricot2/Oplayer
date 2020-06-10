@@ -3,15 +3,15 @@
 Version française. 09 juin 2020.
 <br>
 ## Materiel :
-<br>
-Raspberry pi 3.
-Sound hat WM8960-Audio-HAT (carte son). + mini HP.
-Arduino Nano.
-Carte Micro SD 16 Go.
-Alimentation.
-Potentiometre de volume.
-Boutton contact
-<br>
+
+* Raspberry pi 3.
+* Sound hat WM8960-Audio-HAT (carte son). + mini HP.
+* Arduino Nano.
+* Carte Micro SD 16 Go.* 
+* Alimentation.
+* Potentiometre de volume.
+* Boutton contact
+
 ## Construction :
 
 Inclure un fichier Fritzing.
@@ -31,7 +31,7 @@ Le player est équipé d'un server SAMBA,
 * Elle doit porter le nom :  `MEDIA_USB`
 
 #### 2\_Formater des fichiers sons :
-<br>
+
 * Préférer des fichiers ".wav" au format 24bit 48Hz pour être sur que le lecteur le prennent en compte.
 * Ne pas laisser de vides trop pronancés après la fin du fichier son. 1 seconde maximum. Ne pas laisser de vide avant le fichier non plus.
 * **Ne pas mettre d'espaces** dans les titres, un fichier type serait :
@@ -45,20 +45,16 @@ Le player est équipé d'un server SAMBA,
 Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
 
 ### 4\_Eteindre le player :
-<br>
 TODO..........................................
 <br>
+
 ### 5\_Déclencher un son :
 
 Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
 
 ### 4\_Eteindre le player :
-<br>
 TODO..........................................
 <br>
-### 5\_Déclencher un son :
-<br>
-TODO..........................................
 
 # TODO
 
