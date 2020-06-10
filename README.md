@@ -41,7 +41,9 @@ Le player est équipé d'un server SAMBA,
 * Eviter les accents et autres carractères bizarres.
 
 ### 3\_Allumer le player :
-<br>
+
+<<<<<<< HEAD
+
 Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
 
 ### 4\_Eteindre le player :
@@ -50,7 +52,21 @@ TODO..........................................
 
 ### 5\_Déclencher un son :
 
-# TODO 
+# TODO
+
+=======
+
+Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
+
+### 4\_Eteindre le player :
+<br>
+TODO..........................................
+<br>
+### 5\_Déclencher un son :
+<br>
+TODO..........................................
+
+# TODO
 
 * Réglage de volume pilote Alsamixer.
 * Led témoin pour le geste de délclanchement du son sur Arduino Nano.
@@ -62,4 +78,4 @@ TODO..........................................
 
 * La clef usb ne se boot qu'une seule fois... Il faut redémarer le RPi pour y arriver. La commande est :
 
-sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /media/usbhdd
+`sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /media/usbhdd`
