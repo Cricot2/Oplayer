@@ -75,7 +75,6 @@ def onButton_pressed():
 
 if __name__ == "__main__":
     try:
-        #os.system(f"sudo mount /dev/sda2 {medias_usb}") # Mount usb drive. 
         os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
         print('\n\nProgram is starting...\nPress button on the PiHat to play a sound.\n')
         button.when_pressed = onButton_pressed
