@@ -39,7 +39,6 @@ Le player est équipé d'un server SAMBA,
 `titre_de_mon_fichier.wav`
 
 * Eviter les accents et autres carractères bizarres.
-<br>
 
 ### 3\_Allumer le player :
 
@@ -49,7 +48,6 @@ Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsqu
 <br>
 TODO..........................................
 <br>
-
 ### 5\_Déclencher un son :
 
 Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
