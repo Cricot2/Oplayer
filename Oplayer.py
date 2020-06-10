@@ -2,8 +2,7 @@
 ##################################################
 # Oplayer.
 # 09.06.2020 
-# TODO: while True pour le button. Clear pause().
-# TODO: usb disque.
+# TODO: change button function in while true and not pause().
 ##################################################
 import os
 import time 
@@ -20,6 +19,8 @@ medias_usb = os.path.join(current_dir, "medias_usb")
 
 
 def remove_hidden_files():
+    # create media_usb folder if not exist.
+    os.makedirs(medias_usb, exist_ok=True)
     # Remove '._DS_Store' hidden file in max OS in the internal /medias folder.
     path = choose_media_path()
     liste_medias = os.listdir(path)
@@ -69,6 +70,7 @@ def volume_control():
 
 def onButton_pressed():
     shime()
+    # Wait until shime's end.
     time.sleep(5.5)
     random_player()
 
