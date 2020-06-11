@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# FIXME: alsamixer problème de thread fantome quand on quitte l'app brutalement.
 import os
 import time 
 import random
@@ -7,7 +8,8 @@ from signal import pause
 from shutil import rmtree
 import vlc
 
-button = Button(17)
+button_play = Button(17)
+button_shutdown = Button(12)
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
@@ -65,10 +67,14 @@ def volume_control():
     pass
 
 
+def shutdown():
+    pass
+
+
 def loop():
     last_value = 0
     while True:
-        if button.is_pressed and last_value == 0:
+        if button_play.is_pressed and last_value == 0:
             shime()
             time.sleep(5.5)
             player = vlc.MediaPlayer(random_player())
@@ -76,7 +82,7 @@ def loop():
             player.play()
             last_value = 1 
             time.sleep(2)
-        elif button.is_pressed and last_value == 1:
+        elif button_play.is_pressed and last_value == 1:
             player.stop()
             shime()
             time.sleep(5.5)
