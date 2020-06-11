@@ -8,8 +8,10 @@ from signal import pause
 from shutil import rmtree
 import vlc
 
-button_play = Button(17) # when Arduino connexion OK should be 27.
-#button_shutdown = Button(17) # internal soundcard button.
+button_play = Button(17)  # when Arduino connexion OK should be 27.
+button_shutdown = Button(27)  # must be internal soundcard button 17.
+volume_down = Button(23)
+volume_up = Button(22)
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
@@ -65,21 +67,6 @@ def random_player():
     return choosed_file
 
 
-def volume_control():
-    while True:
-        if volume_down.is_pressed:
-            os.popen("amixer -c 0 set Playback 1%+")
-        if volume_up.is_pressed:
-            os.popen("amixer -c 0 set Playback 1%+")
-
-
-def shutdown():
-    while True:
-        if button_shutdown.is_pressed:
-            time.sleep(0.5)
-            os.popen("sudo halt -p")
-
-
 def loop():
     last_value = 0
     while True:
@@ -99,6 +86,15 @@ def loop():
             player.play()
             last_value = 1
             time.sleep(2)
+        if volume_down.is_pressed:
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%-")
+        if volume_up.is_pressed:
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%+")
+        if button_shutdown.is_pressed:
+            os.popen("sudo halt -p")
+        
 
 
 if __name__ == "__main__":
@@ -109,4 +105,3 @@ if __name__ == "__main__":
         print("Program is quitting.")
         os.system("sudo pkill vlc")
         exit()
-
