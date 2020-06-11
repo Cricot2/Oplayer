@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # FIXME: alsamixer problème de thread fantome quand on quitte l'app brutalement.
 import os
-import time 
+import time
 import random
 from gpiozero import Button
 from signal import pause
@@ -14,8 +14,10 @@ current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
 
+
 def setup():
-    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
+    # Mount usb drive.
+    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
     start_shime()
     loop()
@@ -55,7 +57,7 @@ def shime():
     path_to_shime = os.path.join(current_dir, 'random_shime.wav')
     shime_player = vlc.MediaPlayer(path_to_shime)
     shime_player.play()
-    
+
 
 def random_player():
     randomfile = random.choice(os.listdir(choose_media_path()))
@@ -64,11 +66,18 @@ def random_player():
 
 
 def volume_control():
-    pass
+    while True:
+        if volume_down.is_pressed:
+            os.popen("amixer -c 0 set Playback 1%+")
+        if volume_up.is_pressed:
+            os.popen("amixer -c 0 set Playback 1%+")
 
 
 def shutdown():
-    pass
+    while True:
+        if button_shutdown.is_pressed:
+            time.sleep(0.5)
+            os.popen("sudo halt -p")
 
 
 def loop():
@@ -80,7 +89,7 @@ def loop():
             player = vlc.MediaPlayer(random_player())
             player.stop()
             player.play()
-            last_value = 1 
+            last_value = 1
             time.sleep(2)
         elif button_play.is_pressed and last_value == 1:
             player.stop()
@@ -90,7 +99,7 @@ def loop():
             player.play()
             last_value = 1
             time.sleep(2)
-              
+
 
 if __name__ == "__main__":
     try:
@@ -100,5 +109,4 @@ if __name__ == "__main__":
         print("Program is quitting.")
         os.system("sudo pkill vlc")
         exit()
-
 
