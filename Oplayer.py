@@ -57,33 +57,44 @@ def shime():
 def random_player():
     randomfile = random.choice(os.listdir(choose_media_path()))
     choosed_file = os.path.join(choose_media_path(), randomfile)
-    player = vlc.MediaPlayer(choosed_file)
-    player.play()
-    time.sleep(1.5)
-    duration = player.get_length() / 1000
-    time.sleep(duration)
+    return choosed_file
 
 
 def volume_control():
     pass
 
 
-def onButton_pressed():
-    shime()
-    # Wait until shime's end.
-    time.sleep(5.5)
-    random_player()
+def loop():
+    last_value = 0
+    while True:
+        if button.is_pressed and last_value == 0:
+            shime()
+            time.sleep(5.5)
+            player = vlc.MediaPlayer(random_player())
+            player.play()
+            last_value = 1    
+        elif button.is_pressed and last_value == 1:
+            player.stop()
+            shime()
+            time.sleep(5.5)
+            player = vlc.MediaPlayer(random_player())
+            player.play()
+            last_value = 0  
+
+
+def setup():
+    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
+    remove_hidden_files()
+    start_shime()
+    loop()
 
 
 if __name__ == "__main__":
     try:
-        os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
         print('\n\nProgram is starting...\nPress button on the PiHat to play a sound.\n')
-        button.when_pressed = onButton_pressed
-        remove_hidden_files()
-        start_shime()
+        setup()
     except KeyboardInterrupt:
         print("Program is quitting.")
         exit()
 
-pause()
+
