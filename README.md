@@ -34,10 +34,7 @@ Le player est équipé d'un server SAMBA,
 
 * Préférer des fichiers ".wav" au format 24bit 48Hz pour être sur que le lecteur le prennent en compte.
 * Ne pas laisser de vides trop pronancés après la fin du fichier son. 1 seconde maximum. Ne pas laisser de vide avant le fichier non plus.
-* **Ne pas mettre d'espaces** dans les titres, un fichier type serait :
-
-`titre_de_mon_fichier.wav`
-
+* **Ne pas mettre d'espaces** dans les titres, un fichier type serait : `titre_de_mon_fichier.wav`
 * Eviter les accents et autres carractères bizarres.
 
 ### 3\_Allumer le player :
