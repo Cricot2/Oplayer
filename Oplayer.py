@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-##################################################
-# Oplayer.
-# 09.06.2020 
-# TODO: change button function in while true and not pause().
-##################################################
 import os
 import time 
 import random
@@ -16,6 +11,12 @@ button = Button(17)
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
+
+def setup():
+    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
+    remove_hidden_files()
+    start_shime()
+    loop()
 
 
 def remove_hidden_files():
@@ -71,23 +72,19 @@ def loop():
             shime()
             time.sleep(5.5)
             player = vlc.MediaPlayer(random_player())
+            player.stop()
             player.play()
-            last_value = 1    
+            last_value = 1 
+            time.sleep(2)
         elif button.is_pressed and last_value == 1:
             player.stop()
             shime()
             time.sleep(5.5)
             player = vlc.MediaPlayer(random_player())
             player.play()
-            last_value = 0  
-
-
-def setup():
-    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}") # Mount usb drive. 
-    remove_hidden_files()
-    start_shime()
-    loop()
-
+            last_value = 1
+            time.sleep(2)
+              
 
 if __name__ == "__main__":
     try:
@@ -95,6 +92,7 @@ if __name__ == "__main__":
         setup()
     except KeyboardInterrupt:
         print("Program is quitting.")
+        os.system("sudo pkill vlc")
         exit()
 
 
