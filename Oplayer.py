@@ -8,8 +8,8 @@ from signal import pause
 from shutil import rmtree
 import vlc
 
-button_play = Button(17)
-button_shutdown = Button(12)
+button_play = Button(17) # when Arduino connexion OK should be 27.
+#button_shutdown = Button(17) # internal soundcard button.
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
@@ -17,7 +17,7 @@ medias_usb = os.path.join(current_dir, "medias_usb")
 
 def setup():
     # Mount usb drive.
-    os.system(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
+    os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
     start_shime()
     loop()
