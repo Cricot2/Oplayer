@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# FIXME: alsamixer problème de thread fantome quand on quitte l'app brutalement.
 import os
 import time
 import random
@@ -9,7 +8,7 @@ from shutil import rmtree
 import vlc
 
 button_play = Button(17)  # when Arduino connexion OK should be 27.
-button_shutdown = Button(27)  # must be internal soundcard button 17.
+button_shutdown = Button(27)  # Must be internal soundcard button 17.
 volume_down = Button(23)
 volume_up = Button(22)
 current_dir = os.path.dirname(__file__)

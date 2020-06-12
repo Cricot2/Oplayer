@@ -1,0 +1,31 @@
+Salut Alex! 
+
+  J'ai donc avancé et après réflexion je préfèrre qu'on puisse changer le cue qui est lue quand on veux. 
+En tout cas je n'arrivais pas à le faire dans le code à cause de l'alatoire qui crée à chaque fois une nouvelle 
+instance de VLC player. Maintenant que j'ai mis tout dans une boucle While j'y arrive. Donc je peux faire l'un et l'autre 
+je suis pas bridé techniquement (lire jusqu'au bout ou pas).
+
+  J'ai aussi prevu des inputs suplémentaires (les GPIO sont pas les bons, le 17 c'est le button sur ma carte son:
+    * Deux bouttons pour rêgler le volume amixer > Playback (donc le son sur les HP's et sur le minijack en même termps)
+    * Un button (pourquoi pas garde le button inclu dans la carte son (GPIO 17) pour éteindre le RPi.
+    * Et bien-sur le 'button' pour lancer un cue aléatoire...
+   
+  La reférence de la carte son est : https://www.waveshare.com/w/upload/5/54/WM8960_Audio_HAT_User_Manual_EN.pdf
+Je nage encore pas mal en éléctronique... Je pense qu"entre le nano et le Rpi tout rentre mais je suis très flou comme tu peux 
+le voire!
+
+  L'USB fonctionne j'ai crée un chemein d'accès dans le dossier /Oplayer/media_usb j'envois une commande linux au lancement du script python
+et si il y a qq chose dans le dossier il choisi ce dossier. Ça fonctionne très bien, j'ai traqué tout les fichiers et dossiers 
+caché que OSX me met sur ma clef il faudrai essaiyer avec un PC aussi (je sais pas si y'a des trucs invisibles aussi).
+Par contre il faut redémarer pour switcher de USB à micro SD mais c'est peux être pas plus mal en fait car tu fais la manippe que 
+une fois...
+  
+  J'ai commencé un README et j'ai fritzing aussi.
+ 
+ VOILA! 
+ Merci à toi, j'apprends du concret là...
+ 
+  
+  
+   
+   
