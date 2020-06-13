@@ -6,7 +6,8 @@ from gpiozero import Button
 import RPi.GPIO as GPIO
 from signal import pause
 from shutil import rmtree
-import vlc
+import pygame
+
 
 INPUT_PIN = 23
 # button_play = Button(27)  # when Arduino connexion OK should be 27.
@@ -16,7 +17,6 @@ volume_up = Button(22)
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
-
 
 def setup():
     # Mount usb drive.
@@ -68,65 +68,57 @@ def random_player():
     return choosed_file    
 
 
-
-# def start_sound():
-#     while True:
-#         if  (GPIO.input(INPUT_PIN) == True) and last_value == 0:
-#             shime()
-#             time.sleep(5.5)
-#             player = vlc.MediaPlayer(random_player())
-#             player.stop()
-#             player.play()
-#             last_value = 1
-#             time.sleep(2)
-#             loop()
-#         elif (GPIO.input(INPUT_PIN) == True) and last_value == 1:
-#             player.stop()
-#             shime()
-#             time.sleep(5.5)
-#             player = vlc.MediaPlayer(random_player())
-#             player.play()
-#             last_value = 1
-#             time.sleep(2)
-#             loop()
+def start_sound():
+    last_value = 0
+    if (GPIO.input(INPUT_PIN) == True) and last_value == 0:
+        print("test")
+        shime()
+        time.sleep(5.5)
+        oName = random_player()
+        print(str(oName))
+        player = vlc.MediaPlayer(oName)
+        oold = oName
+        player.stop()
+        player.play()
+        last_value = 1
+        time.sleep(2)
+        loop()
+    elif (GPIO.input(INPUT_PIN) == True) and last_value == 1:
+        print("test2")
+        shime()
+        time.sleep(5.5)
+        random_player()
+        print(str(oold))
+        player = vlc.MediaPlayer(oold)
+        oName = random_player()
+        oold = oName
+        player = vlc.MediaPlayer(oold)
+        player.play()
+        last_value = 1
+        time.sleep(2)
+        loop()
 
 
 def loop():
-    last_value = 0
     o33 = 0
     o0 = 0
     while True:
         if (GPIO.input(INPUT_PIN) == True):  # Physically read the pin now
             o33 = o33 + 1
         if o33 == 2:
-            if  (GPIO.input(INPUT_PIN) == True) and last_value == 0:
-                shime()
-                time.sleep(5.5)
-                player = vlc.MediaPlayer(random_player())
-                player.stop()
-                player.play()
-                last_value = 1
-                time.sleep(2)
-            elif (GPIO.input(INPUT_PIN) == True) and last_value == 1:
-                player.stop()
-                shime()
-                time.sleep(5.5)
-                player = vlc.MediaPlayer(random_player())
-                player.play()
-                last_value = 1
-                time.sleep(2)
+            start_sound()
         elif o33 == 30:
             print('pause')
         # else:
         #     print('_')
-        else:
-            if o0 == 0:
-                o0 = o0 + 1
-            elif o0 == 1:
-                o33 = 0
-                o0 = 0
-            # else:
-            #     # print("-")
+    else:
+        if o0 == 0:
+            o0 = o0 + 1
+        elif o0 == 1:
+            o33 = 0
+            o0 = 0
+        # else:
+        #     # print("-")
     time.sleep(0.1)
     if volume_down.is_pressed:
         time.sleep(0.1)
