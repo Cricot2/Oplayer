@@ -7,7 +7,7 @@ from shutil import rmtree
 import vlc
 
 touch_play = 23
-button_shutdown = 17  
+button_shutdown = 17
 touch_vol_down = 24
 touch_vol_up = 25
 current_dir = os.path.dirname(__file__)
@@ -29,12 +29,12 @@ def setup():
 
 
 def remove_hidden_files():
-    # create media_usb folder if not exist.
+    """Create media_usb folder if not exist."""
     os.makedirs(medias_usb, exist_ok=True)
-    # Remove '._DS_Store' hidden file in max OS in the internal /medias folder.
+    """Remove '._DS_Store' hidden file in max OS in the internal /medias folder."""
     path = choose_media_path()
     liste_medias = os.listdir(path)
-    # liste_usb_media = os.listdir(medias_usb)
+    liste_usb_media = os.listdir(medias_usb)
     for f in liste_medias:
         if f.startswith("._"):
             os.remove(os.path.join(path, f))
@@ -52,14 +52,14 @@ def choose_media_path():
 
 def start_shime():
     # Just for say player is ready when powered.
-    path_to_shime = os.path.join(current_dir, 'start_shime.wav')
+    path_to_shime = os.path.join(current_dir, "shimes", "start_shime.wav")
     shime_player = vlc.MediaPlayer(path_to_shime)
     shime_player.play()
 
 
 def shime():
     # Sound played before the random selected cue.
-    path_to_shime = os.path.join(current_dir, 'random_shime.wav')
+    path_to_shime = os.path.join(current_dir, "shimes", "random_shime.wav")
     shime_player = vlc.MediaPlayer(path_to_shime)
     shime_player.play()
 
@@ -84,22 +84,22 @@ def vol_up():
 
 def shutdown():
     print("SHUTDOWN")
-    time.sleep(1)
     os.popen("sudo halt -p")
 
 
 def main():
     last_value = 0
     o33 = 0
-    o0 = 0 
+    o0 = 0
     while True:
-        if (GPIO.input(touch_play) == True):  
+        if (GPIO.input(touch_play) == True):
             o33 += 1
             if o33 == 2:
                 if (GPIO.input(touch_play) == True) and last_value == 0:
                     shime()
                     time.sleep(5.5)
-                    player = vlc.MediaPlayer(random_player())
+                    choosed_file = random_player()
+                    player = vlc.MediaPlayer(choosed_file)
                     player.stop()
                     time.sleep(0.01)
                     player.play()
@@ -109,7 +109,8 @@ def main():
                     player.stop()
                     shime()
                     time.sleep(5.5)
-                    player = vlc.MediaPlayer(random_player())
+                    choosed_file = random_player()
+                    player = vlc.MediaPlayer(choosed_file)
                     player.play()
                     last_value = 1
                     time.sleep(2)
@@ -123,9 +124,10 @@ def main():
             vol_down()
         if (GPIO.input(touch_vol_up) == True):
             vol_up()
-        if (GPIO.input(button_shutdown) == GPIO.LOW):  
-            shutdown()
-    time.sleep(0.1)    
+        if (GPIO.input(button_shutdown) == GPIO.LOW):
+            player.stop()
+            #shutdown()
+    time.sleep(0.1)
 
 
 try:

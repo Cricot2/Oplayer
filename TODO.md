@@ -1,10 +1,10 @@
 # TODO:
 
-14 juin 2020 - Après la cession avec Alex.
+14 juin 2020 - Après la cession avec Alex. SOIR TARD MAIS BIEN!
 <br>
-* Vérifier les autre buttons, et implenter fonction pour les deux buttons volume touch.
-* Mettre les shimes dans un dossier. 
+* Vérifier les autre buttons, et implemetenter fonction pour les deux buttons volume touch...
 * Comment faire la fonction pause?? Il faut de l'assynchrone pour pouvoir faire une pause car après `o33 += 1 == 2 il y a un sleep()` pour la shime... Sinon on utilise les deux buttons de volume en combo : `if (UP + DOWN): player.pause()` en pseudo code...
+* Mettre plus fort random shime.
 
 # FIXME:
 <br>
