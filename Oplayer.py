@@ -2,27 +2,29 @@
 import os
 import time
 import random
-#from gpiozero import Button
+from gpiozero import Button
 import RPi.GPIO as GPIO
 from signal import pause
 from shutil import rmtree
 import vlc
 
 INPUT_PIN = 23
-# button_play = Button(27)  # when Arduino connexion OK should be 27.
-# button_shutdown = Button(17)  # Must be internal soundcard button 17.
-# volume_down = Button(23)
-# volume_up = Button(22)
+
+button_play = Button(27)  # when Arduino connexion OK should be 27.
+button_shutdown = Button(17)  # Must be internal soundcard button 17.
+volume_down = Button(24)
+volume_up = Button(25)
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
 
 
 def setup():
+    # define GPIO.
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(INPUT_PIN, GPIO.IN)
     # Mount usb drive.
-    os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
+    # os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
     start_shime()
     loop()
@@ -34,7 +36,7 @@ def remove_hidden_files():
     # Remove '._DS_Store' hidden file in max OS in the internal /medias folder.
     path = choose_media_path()
     liste_medias = os.listdir(path)
-    #liste_usb_media = os.listdir(medias_usb)
+    # liste_usb_media = os.listdir(medias_usb)
     for f in liste_medias:
         if f.startswith("._"):
             os.remove(os.path.join(path, f))
@@ -67,7 +69,7 @@ def shime():
 def random_player():
     randomfile = random.choice(os.listdir(choose_media_path()))
     choosed_file = os.path.join(choose_media_path(), randomfile)
-    return choosed_file    
+    return choosed_file
 
 
 def loop():
@@ -75,10 +77,11 @@ def loop():
     o33 = 0
     o0 = 0
     while True:
-        if (GPIO.input(INPUT_PIN) == True):  
+        if (GPIO.input(INPUT_PIN) == True):  # Physically read the pin now
             o33 = o33 + 1
         if o33 == 2:
-            if  (GPIO.input(INPUT_PIN) == True) and last_value == 0:
+            if (GPIO.input(INPUT_PIN) == True) and last_value == 0:
+                print("boucle1: IF")
                 shime()
                 time.sleep(5.5)
                 player = vlc.MediaPlayer(random_player())
@@ -87,6 +90,7 @@ def loop():
                 last_value = 1
                 time.sleep(2)
             elif (GPIO.input(INPUT_PIN) == True) and last_value == 1:
+                print("boucle_2: ELIF")
                 player.stop()
                 shime()
                 time.sleep(5.5)
@@ -102,17 +106,17 @@ def loop():
             elif o0 == 1:
                 o33 = 0
                 o0 = 0
-        time.sleep(0.1)
-        # if volume_down.is_pressed:
-        #     time.sleep(0.1)
-        #     os.popen("amixer -c 0 set Playback 1%-")
-        # if volume_up.is_pressed:
-        #     time.sleep(0.1)
-        #     os.popen("amixer -c 0 set Playback 1%+")
-        # if button_shutdown.is_pressed:
-        #     #os.popen("sudo halt -p")
-        #     os.popen("sudo reboot")
-        
+        if volume_down.is_pressed:
+            print("volume_down")
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%-")
+        if volume_up.is_pressed:
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%+")
+        if button_shutdown.is_pressed:
+            # os.popen("sudo halt -p")
+            os.popen("sudo reboot")
+    time.sleep(0.1)    
 
 
 if __name__ == "__main__":
