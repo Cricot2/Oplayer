@@ -2,27 +2,25 @@
 import os
 import time
 import random
-from gpiozero import Button
 import RPi.GPIO as GPIO
-from signal import pause
 from shutil import rmtree
 import vlc
 
-INPUT_PIN = 23
-
-button_play = Button(27)  # when Arduino connexion OK should be 27.
-button_shutdown = Button(17)  # Must be internal soundcard button 17.
-volume_down = Button(24)
-volume_up = Button(25)
+touch_play = 23
+button_shutdown = 17  
+touch_vol_down = 24
+touch_vol_up = 25
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
 
 
 def setup():
-    # define GPIO.
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(INPUT_PIN, GPIO.IN)
+    GPIO.setup(touch_play, GPIO.IN)
+    GPIO.setup(button_shutdown, GPIO.IN)
+    GPIO.setup(touch_vol_down, GPIO.IN)
+    GPIO.setup(touch_vol_up, GPIO.IN)
     # Mount usb drive.
     # os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
@@ -77,45 +75,52 @@ def loop():
     o33 = 0
     o0 = 0
     while True:
-        if (GPIO.input(INPUT_PIN) == True):  # Physically read the pin now
+        if (GPIO.input(touch_play) == True):  # Physically read the pin now
             o33 = o33 + 1
-        if o33 == 2:
-            if (GPIO.input(INPUT_PIN) == True) and last_value == 0:
-                print("boucle1: IF")
-                shime()
-                time.sleep(5.5)
-                player = vlc.MediaPlayer(random_player())
-                player.stop()
-                player.play()
-                last_value = 1
-                time.sleep(2)
-            elif (GPIO.input(INPUT_PIN) == True) and last_value == 1:
-                print("boucle_2: ELIF")
-                player.stop()
-                shime()
-                time.sleep(5.5)
-                player = vlc.MediaPlayer(random_player())
-                player.play()
-                last_value = 1
-                time.sleep(2)
-        elif o33 == 30:
-            print('pause')
+            if o33 == 2:
+                if (GPIO.input(touch_play) == True) and last_value == 0:
+                    print("if 1")
+                    shime()
+                    time.sleep(5.5)
+                    player = vlc.MediaPlayer(random_player())
+                    player.stop()
+                    player.play()
+                    last_value = 1
+                    time.sleep(2)
+                elif (GPIO.input(touch_play) == True) and last_value == 1:
+                    print("if 2")
+                    player.stop()
+                    shime()
+                    time.sleep(5.5)
+                    player = vlc.MediaPlayer(random_player())
+                    player.play()
+                    last_value = 1
+                    time.sleep(2)
+            elif o33 == 15:
+                print('pause')
+                player.pause()
+                last_value = 0
+                o33 = 0
+                o0 = 0
+                time.sleep(3)
         else:
             if o0 == 0:
                 o0 = o0 + 1
             elif o0 == 1:
                 o33 = 0
                 o0 = 0
-        if volume_down.is_pressed:
-            print("volume_down")
-            time.sleep(0.1)
-            os.popen("amixer -c 0 set Playback 1%-")
-        if volume_up.is_pressed:
-            time.sleep(0.1)
-            os.popen("amixer -c 0 set Playback 1%+")
-        if button_shutdown.is_pressed:
-            # os.popen("sudo halt -p")
-            os.popen("sudo reboot")
+        # if (GPIO.input(touch_vol_down) == True):
+        #     print("volume_down")
+        #     time.sleep(0.1)
+        #     os.popen("amixer -c 0 set Playback 1%-")
+        # if (GPIO.input(touch_vol_up) == True):
+        #     print("volume_up")
+        #     time.sleep(0.1)
+        #     os.popen("amixer -c 0 set Playback 1%+")
+        # if (GPIO.input(button_shutdown) == True):  
+        #     print("SHUTDOWN")
+        #     # os.popen("sudo halt -p")
+        #     os.popen("sudo reboot")
     time.sleep(0.1)    
 
 
