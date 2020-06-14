@@ -1,9 +1,0 @@
-Creer une variavle au lieu d'une fonction random player pour séparer.
-
-Metttre readme que dans github.
-
-Grafitart formation git
-
-Expect si usb ne fonctionne pas... S'inspirer du code d'Alex.
-
-Rajouter un lancement sans appuyer sur button.

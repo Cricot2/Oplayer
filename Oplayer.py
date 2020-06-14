@@ -93,9 +93,8 @@ def main():
     o33 = 0
     o0 = 0 
     while True:
-        if (GPIO.input(touch_play) == True):  # Physically read the pin now
+        if (GPIO.input(touch_play) == True):  
             o33 += 1
-            print(o33)
             if o33 == 2:
                 if (GPIO.input(touch_play) == True) and last_value == 0:
                     shime()
@@ -114,13 +113,6 @@ def main():
                     player.play()
                     last_value = 1
                     time.sleep(2)
-            elif o33 == 10:
-                print('pause')
-                player.pause()
-                last_value = 0
-                o33 = 0
-                o0 = 0
-                time.sleep(3)
         else:
             if o0 == 0:
                 o0 += 1

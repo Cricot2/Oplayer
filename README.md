@@ -39,7 +39,7 @@ Le player est équipé d'un server SAMBA,
 
 ### 3\_Allumer le player :
 
-Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
+Pour allumer le player il suffit de le brancher à une prise de courrant (ATTENTION ne fonctionne pas sur batterie, besoin d'être relié à la terre. Lorsque le player est prêt un son court est joué (il ne sera joué qu'une seule fois au démarage).
 
 ### 4\_Eteindre le player :
 TODO..........................................

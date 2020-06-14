@@ -1,19 +1,16 @@
-# TODO
+# TODO:
 
 14 juin 2020 - Après la cession avec Alex.
 <br>
-* Mettre tout les buttons avec RPi.GPIO.
-* Vérifier les autre buttons.
-* Clean dans le script >> Fonctions.
-* Remove "." > Dossier ne fonctionne pas ? (clef USB)
-* Ajouter prise de courrant et pas batterie au REDME.
+* Vérifier les autre buttons, et implenter fonction pour les deux buttons volume touch.
+* Mettre les shimes dans un dossier. 
+* Comment faire la fonction pause?? Il faut de l'assynchrone pour pouvoir faire une pause car après `o33 += 1 == 2 il y a un sleep()` pour la shime... Sinon on utilise les deux buttons de volume en combo : `if (UP + DOWN): player.pause()` en pseudo code...
 
-# FIXME
+# FIXME:
 <br>
 * Probleme de permition pour le player
 
-ALSA lib pcm\_dmix.c:1071:(snd\_pcm\_dmix\_open) unable to create IPC semaphore
+`ALSA lib pcm\_dmix.c:1071:(snd\_pcm\_dmix\_open) unable to create IPC semaphore`
 
-Trouver d'où peux venir le problème :
-    - cmd shell au démarage du script
-    - permition du player VLC?
+C'est un problème de permission... Le crontab est lancé en sudo et launcher appel `sudo python3 /path`
+Du coup quand je lance depuis vs code depuis le terminal je perds les autorisations... Il doit y avoir un truc à faire.
