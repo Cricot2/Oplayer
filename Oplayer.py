@@ -22,7 +22,7 @@ def setup():
     GPIO.setup(touch_vol_down, GPIO.IN)
     GPIO.setup(touch_vol_up, GPIO.IN)
     # Mount usb drive.
-    # os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
+    os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
     start_shime()
     main()
@@ -91,22 +91,22 @@ def shutdown():
 def main():
     last_value = 0
     o33 = 0
-    o0 = 0
+    o0 = 0 
     while True:
         if (GPIO.input(touch_play) == True):  # Physically read the pin now
-            o33 = o33 + 1
+            o33 += 1
+            print(o33)
             if o33 == 2:
                 if (GPIO.input(touch_play) == True) and last_value == 0:
-                    print("if 1")
                     shime()
                     time.sleep(5.5)
                     player = vlc.MediaPlayer(random_player())
                     player.stop()
+                    time.sleep(0.01)
                     player.play()
                     last_value = 1
                     time.sleep(2)
                 elif (GPIO.input(touch_play) == True) and last_value == 1:
-                    print("if 2")
                     player.stop()
                     shime()
                     time.sleep(5.5)
@@ -114,7 +114,7 @@ def main():
                     player.play()
                     last_value = 1
                     time.sleep(2)
-            elif o33 == 15:
+            elif o33 == 10:
                 print('pause')
                 player.pause()
                 last_value = 0
@@ -123,7 +123,7 @@ def main():
                 time.sleep(3)
         else:
             if o0 == 0:
-                o0 = o0 + 1
+                o0 += 1
             elif o0 == 1:
                 o33 = 0
                 o0 = 0
@@ -136,11 +136,12 @@ def main():
     time.sleep(0.1)    
 
 
-if __name__ == "__main__":
-    try:
-        print('\n\nProgram is starting...\nPress button on the PiHat to play a sound.\n')
-        setup()
-    except KeyboardInterrupt:
-        print("Program is quitting.")
-        os.system("sudo pkill vlc")
-        exit()
+try:
+    print('\n\nProgram is starting...\nPress button on the PiHat to play a sound.\n')
+    setup()
+except KeyboardInterrupt:
+    print("Program is quitting.")
+    exit()
+except Exception:
+    print("unknown error")
+    pass

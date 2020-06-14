@@ -1,7 +1,5 @@
 Creer une variavle au lieu d'une fonction random player pour séparer.
 
-Appeler loop main.
-
 Metttre readme que dans github.
 
 Grafitart formation git
