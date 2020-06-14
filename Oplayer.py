@@ -25,7 +25,7 @@ def setup():
     # os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     remove_hidden_files()
     start_shime()
-    loop()
+    main()
 
 
 def remove_hidden_files():
@@ -70,7 +70,25 @@ def random_player():
     return choosed_file
 
 
-def loop():
+def vol_down():
+    print("volume_down")
+    time.sleep(0.1)
+    os.popen("amixer -c 0 set Playback 1%-")
+
+
+def vol_up():
+    print("volume_up")
+    time.sleep(0.1)
+    os.popen("amixer -c 0 set Playback 1%+")
+
+
+def shutdown():
+    print("SHUTDOWN")
+    time.sleep(1)
+    os.popen("sudo halt -p")
+
+
+def main():
     last_value = 0
     o33 = 0
     o0 = 0
@@ -110,17 +128,11 @@ def loop():
                 o33 = 0
                 o0 = 0
         if (GPIO.input(touch_vol_down) == True):
-            print("volume_down")
-            time.sleep(0.1)
-            os.popen("amixer -c 0 set Playback 1%-")
+            vol_down()
         if (GPIO.input(touch_vol_up) == True):
-            print("volume_up")
-            time.sleep(0.1)
-            os.popen("amixer -c 0 set Playback 1%+")
+            vol_up()
         if (GPIO.input(button_shutdown) == GPIO.LOW):  
-            print("SHUTDOWN")
-            time.sleep(1)
-            os.popen("sudo halt -p")
+            shutdown()
     time.sleep(0.1)    
 
 
