@@ -18,7 +18,7 @@ medias_usb = os.path.join(current_dir, "medias_usb")
 def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(touch_play, GPIO.IN)
-    GPIO.setup(button_shutdown, GPIO.IN)
+    GPIO.setup(button_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(touch_vol_down, GPIO.IN)
     GPIO.setup(touch_vol_up, GPIO.IN)
     # Mount usb drive.
@@ -109,18 +109,18 @@ def loop():
             elif o0 == 1:
                 o33 = 0
                 o0 = 0
-        # if (GPIO.input(touch_vol_down) == True):
-        #     print("volume_down")
-        #     time.sleep(0.1)
-        #     os.popen("amixer -c 0 set Playback 1%-")
-        # if (GPIO.input(touch_vol_up) == True):
-        #     print("volume_up")
-        #     time.sleep(0.1)
-        #     os.popen("amixer -c 0 set Playback 1%+")
-        # if (GPIO.input(button_shutdown) == True):  
-        #     print("SHUTDOWN")
-        #     # os.popen("sudo halt -p")
-        #     os.popen("sudo reboot")
+        if (GPIO.input(touch_vol_down) == True):
+            print("volume_down")
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%-")
+        if (GPIO.input(touch_vol_up) == True):
+            print("volume_up")
+            time.sleep(0.1)
+            os.popen("amixer -c 0 set Playback 1%+")
+        if (GPIO.input(button_shutdown) == GPIO.LOW):  
+            print("SHUTDOWN")
+            time.sleep(1)
+            os.popen("sudo halt -p")
     time.sleep(0.1)    
 
 
