@@ -23,8 +23,8 @@ def setup():
     GPIO.setup(touch_vol_up, GPIO.IN)
     # Mount usb drive.
     os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
-    remove_hidden_files()
     start_shime()
+    remove_hidden_files()
     main()
 
 
@@ -33,13 +33,13 @@ def remove_hidden_files():
     os.makedirs(medias_usb, exist_ok=True)
     """Remove '._DS_Store' hidden file in max OS in the internal /medias folder."""
     path = choose_media_path()
+    time.sleep(0.1)
     liste_medias = os.listdir(path)
-    liste_usb_media = os.listdir(medias_usb)
     for f in liste_medias:
         if f.startswith("._"):
             os.remove(os.path.join(path, f))
         elif f.startswith("."):
-            rmtree(os.path.join(path, f))
+            rmtree(os.path.join(path, f), ignore_errors=True)
 
 
 def choose_media_path():
@@ -137,5 +137,5 @@ except KeyboardInterrupt:
     print("Program is quitting.")
     exit()
 except Exception:
-    print("unknown error")
+    #print("unknown error")
     pass
