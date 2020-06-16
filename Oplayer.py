@@ -137,5 +137,5 @@ except KeyboardInterrupt:
     print("Program is quitting.")
     exit()
 except Exception:
-    #print("unknown error")
-    pass
+    print("unknown error")
+    setup()
