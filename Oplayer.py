@@ -64,7 +64,7 @@ def shime():
     shime_player.play()
     time.sleep(1.5)
     duration = shime_player.get_length() / 1000
-    time.sleep(duration)
+    time.sleep(duration - 0.5)
 
 
 def random_file_select():
