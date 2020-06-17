@@ -67,11 +67,16 @@ def shime():
     time.sleep(duration - 0.5)
 
 
-def random_file_select():
+def random_file_select(is_playing=""):
     randomfile = random.choice(os.listdir(choose_media_path()))
     choosed_file = os.path.join(choose_media_path(), randomfile)
-    return choosed_file
-
+    if choosed_file != is_playing:
+        return choosed_file
+    else: 
+        randomfile = random.choice(os.listdir(choose_media_path()))
+        choosed_file = os.path.join(choose_media_path(), randomfile)
+        return choosed_file
+        
 
 def vol_down():
     print("volume_down")
@@ -101,6 +106,7 @@ def main():
                 if (GPIO.input(touch_play) == True) and last_value == 0:
                     shime()
                     choosed_file = random_file_select()
+                    is_playing = choosed_file
                     player = vlc.MediaPlayer(choosed_file)
                     player.play()
                     last_value = 1
@@ -109,7 +115,8 @@ def main():
                     player.stop()
                     time.sleep(0.1)
                     shime()
-                    choosed_file = random_file_select()
+                    choosed_file = random_file_select(is_playing)
+                    is_playing = choosed_file
                     player = vlc.MediaPlayer(choosed_file)
                     player.play()
                     last_value = 1
