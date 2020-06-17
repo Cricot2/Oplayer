@@ -28,6 +28,23 @@ def setup():
     main()
 
 
+def vol_down():
+    print("volume_down")
+    time.sleep(0.1)
+    os.popen("amixer -c 0 set Playback 1%-")
+
+
+def vol_up():
+    print("volume_up")
+    time.sleep(0.1)
+    os.popen("amixer -c 0 set Playback 1%+")
+
+
+def shutdown():
+    print("SHUTDOWN")
+    os.popen("sudo halt -p")
+
+
 def remove_hidden_files():
     """Create media_usb folder if not exist."""
     os.makedirs(medias_usb, exist_ok=True)
@@ -76,23 +93,6 @@ def random_file_select(is_playing=""):
         randomfile = random.choice(os.listdir(choose_media_path()))
         choosed_file = os.path.join(choose_media_path(), randomfile)
         return choosed_file
-
-
-def vol_down():
-    print("volume_down")
-    time.sleep(0.1)
-    os.popen("amixer -c 0 set Playback 1%-")
-
-
-def vol_up():
-    print("volume_up")
-    time.sleep(0.1)
-    os.popen("amixer -c 0 set Playback 1%+")
-
-
-def shutdown():
-    print("SHUTDOWN")
-    os.popen("sudo halt -p")
 
 
 def main():
