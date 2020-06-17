@@ -67,7 +67,7 @@ def shime():
     time.sleep(duration)
 
 
-def random_player():
+def random_file_select():
     randomfile = random.choice(os.listdir(choose_media_path()))
     choosed_file = os.path.join(choose_media_path(), randomfile)
     return choosed_file
@@ -100,17 +100,16 @@ def main():
             if o33 == 2:
                 if (GPIO.input(touch_play) == True) and last_value == 0:
                     shime()
-                    choosed_file = random_player()
+                    choosed_file = random_file_select()
                     player = vlc.MediaPlayer(choosed_file)
-                    player.stop()
-                    time.sleep(0.01)
                     player.play()
                     last_value = 1
                     time.sleep(2)
                 elif (GPIO.input(touch_play) == True) and last_value == 1:
                     player.stop()
+                    time.sleep(0.1)
                     shime()
-                    choosed_file = random_player()
+                    choosed_file = random_file_select()
                     player = vlc.MediaPlayer(choosed_file)
                     player.play()
                     last_value = 1
@@ -137,6 +136,6 @@ try:
 except KeyboardInterrupt:
     print("Program is quitting.")
     exit()
-except Exception:
-    print("unknown error")
-    setup()
+# except Exception:
+#     print("unknown error")
+#     setup()
