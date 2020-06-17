@@ -76,7 +76,7 @@ def random_file_select(is_playing=""):
         randomfile = random.choice(os.listdir(choose_media_path()))
         choosed_file = os.path.join(choose_media_path(), randomfile)
         return choosed_file
-        
+
 
 def vol_down():
     print("volume_down")
@@ -143,6 +143,6 @@ try:
 except KeyboardInterrupt:
     print("Program is quitting.")
     exit()
-# except Exception:
-#     print("unknown error")
-#     setup()
+except Exception:
+    print("unknown error")
+    setup()
