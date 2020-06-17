@@ -55,11 +55,9 @@ TODO..........................................
 
 # TODO
 
-* Réglage de volume pilote Alsamixer.
+
 * Led témoin pour le geste de délclanchement du son sur Arduino Nano.
 * Documentation + Fritzing.
-* Améliorer le player stop pause...
-* Metttre les shime dans un dossier et créer les chemins d'accès.
 
 # FIXME
 
