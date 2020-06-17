@@ -58,10 +58,13 @@ def start_shime():
 
 
 def shime():
-    # Sound played before the random selected cue.
+    # Sound played before the random selected cue. Wait uuntil end of file.
     path_to_shime = os.path.join(current_dir, "shimes", "random_shime.wav")
     shime_player = vlc.MediaPlayer(path_to_shime)
     shime_player.play()
+    time.sleep(1.5)
+    duration = shime_player.get_length() / 1000
+    time.sleep(duration)
 
 
 def random_player():
@@ -97,7 +100,6 @@ def main():
             if o33 == 2:
                 if (GPIO.input(touch_play) == True) and last_value == 0:
                     shime()
-                    time.sleep(5.5)
                     choosed_file = random_player()
                     player = vlc.MediaPlayer(choosed_file)
                     player.stop()
@@ -108,7 +110,6 @@ def main():
                 elif (GPIO.input(touch_play) == True) and last_value == 1:
                     player.stop()
                     shime()
-                    time.sleep(5.5)
                     choosed_file = random_player()
                     player = vlc.MediaPlayer(choosed_file)
                     player.play()
