@@ -48,6 +48,7 @@ def shutdown():
 def remove_hidden_files():
     """Create media_usb folder if not exist."""
     os.makedirs(medias_usb, exist_ok=True)
+    os.makedirs(medias, exist_ok=True)
     """Remove '._DS_Store' hidden file in max OS in the internal /medias folder."""
     path = choose_media_path()
     time.sleep(0.1)
