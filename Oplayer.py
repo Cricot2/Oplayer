@@ -17,10 +17,10 @@ medias_usb = os.path.join(current_dir, "medias_usb")
 
 def setup():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(touch_play, GPIO.IN)
+    GPIO.setup(touch_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(button_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(touch_vol_down, GPIO.IN)
-    GPIO.setup(touch_vol_up, GPIO.IN)
+    GPIO.setup(touch_vol_down, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(touch_vol_up, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     # Mount usb drive.
     os.popen(f"sudo mount -t vfat -o uid=pi,gid=pi /dev/sda2 {medias_usb}")
     start_shime()
@@ -97,40 +97,29 @@ def shutdown():
 
 def main():
     last_value = 0
-    o33 = 0
-    o0 = 0
     while True:
-        if (GPIO.input(touch_play) == True):
-            o33 += 1
-            if o33 == 2:
-                if (GPIO.input(touch_play) == True) and last_value == 0:
-                    shime()
-                    choosed_file = random_file_select()
-                    is_playing = choosed_file
-                    player = vlc.MediaPlayer(choosed_file)
-                    player.play()
-                    last_value = 1
-                    time.sleep(2)
-                elif (GPIO.input(touch_play) == True) and last_value == 1:
-                    player.stop()
-                    time.sleep(0.1)
-                    shime()
-                    choosed_file = random_file_select(is_playing)
-                    is_playing = choosed_file
-                    player = vlc.MediaPlayer(choosed_file)
-                    player.play()
-                    last_value = 1
-                    time.sleep(2)
-        else:
-            if o0 == 0:
-                o0 += 1
-            elif o0 == 1:
-                o33 = 0
-                o0 = 0
-        if (GPIO.input(touch_vol_down) == True):
-            vol_down()
-        if (GPIO.input(touch_vol_up) == True):
-            vol_up()
+        if (GPIO.input(touch_play) == GPIO.HIGH) and last_value == 0:
+            shime()
+            choosed_file = random_file_select()
+            is_playing = choosed_file
+            player = vlc.MediaPlayer(choosed_file)
+            player.play()
+            last_value = 1
+            time.sleep(2)
+        elif (GPIO.input(touch_play) == GPIO.HIGH) and last_value == 1:
+            player.stop()
+            time.sleep(0.1)
+            shime()
+            choosed_file = random_file_select(is_playing)
+            is_playing = choosed_file
+            player = vlc.MediaPlayer(choosed_file)
+            player.play()
+            last_value = 1
+            time.sleep(2)
+        # if (GPIO.input(touch_vol_down) == GPIO.HIGH):
+        #     vol_down()
+        # if (GPIO.input(touch_vol_up) == GPIO.HIGH):
+        #     vol_up()
         if (GPIO.input(button_shutdown) == GPIO.LOW):
             player.stop()
             #shutdown()
