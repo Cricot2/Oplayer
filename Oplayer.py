@@ -8,8 +8,8 @@ import vlc
 
 touch_play = 23
 button_shutdown = 17
-touch_vol_down = 24
-touch_vol_up = 25
+touch_vol_down = 6
+touch_vol_up = 16
 current_dir = os.path.dirname(__file__)
 medias = os.path.join(current_dir, "medias")
 medias_usb = os.path.join(current_dir, "medias_usb")
@@ -29,19 +29,16 @@ def setup():
 
 
 def vol_down():
-    print("volume_down")
     time.sleep(0.1)
     os.popen("amixer -c 0 set Playback 1%-")
 
 
 def vol_up():
-    print("volume_up")
     time.sleep(0.1)
     os.popen("amixer -c 0 set Playback 1%+")
 
 
 def shutdown():
-    print("SHUTDOWN")
     os.popen("sudo halt -p")
 
 
@@ -117,10 +114,10 @@ def main():
             player.play()
             last_value = 1
             time.sleep(2)
-        # if (GPIO.input(touch_vol_down) == GPIO.HIGH):
-        #     vol_down()
-        # if (GPIO.input(touch_vol_up) == GPIO.HIGH):
-        #     vol_up()
+        if (GPIO.input(touch_vol_down) == GPIO.HIGH):
+            vol_down()
+        if (GPIO.input(touch_vol_up) == GPIO.HIGH):
+            vol_up()
         if (GPIO.input(button_shutdown) == GPIO.LOW):
             player.stop()
             #shutdown()
@@ -132,7 +129,7 @@ try:
     setup()
 except KeyboardInterrupt:
     print("Program is quitting.")
+    GPIO.cleanup()
     exit()
 except Exception:
     print("unknown error")
-    setup()
