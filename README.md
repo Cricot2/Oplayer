@@ -1,6 +1,6 @@
 # Oplayer
 
-Version française. 09 juin 2020.
+Version française. 23 juin 2020.
 <br>
 ## Materiel :
 
@@ -53,16 +53,3 @@ Pour allumer le player il suffit de le brancher à une prise de courrant. Lorsqu
 TODO..........................................
 <br>
 
-# TODO
-
-
-* Led témoin pour le geste de délclanchement du son sur Arduino Nano.
-* Documentation + Fritzing.
-
-# FIXME
-
-* La clef usb ne se boot qu'une seule fois... Il faut redémarer le RPi pour y arriver. La commande est :
-
-`sudo mount -t vfat -o uid=pi,gid=pi /dev/sda1 /media/usbhdd`
-
-* En même temps c'est pas si génant que ça... 
