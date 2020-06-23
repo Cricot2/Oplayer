@@ -16,7 +16,6 @@ medias_usb = os.path.join(current_dir, "medias_usb")
 
 
 def setup():
-    os.popen("alsactl --file ~/WM8960-Audio-HAT/wm8960_asound.state restore")
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(touch_play, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(button_shutdown, GPIO.IN, pull_up_down=GPIO.PUD_UP)
