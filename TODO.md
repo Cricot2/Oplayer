@@ -4,6 +4,7 @@
 <br>
 * Comment faire la fonction pause?? Il faut de l'assynchrone pour pouvoir faire une pause car après `o33 += 1 == 2 il y a un sleep()` pour la shime... Sinon on utilise les deux buttons de volume en combo : `if (UP + DOWN): player.pause()` en pseudo code...
 * Mettre plus fort random shime.
+* Installer Raspotify... Ça mange pas de pain.
 
 # FIXME:
 <br>
